@@ -11,6 +11,14 @@ const TodoList = () => {
     setAddData(text);
   };
 
+  const deleteTodo = id => {
+    native.Alert.alert(
+      '삭제가 완료되었습니다.',
+      '삭제하신 리스트는 복구할 수 없습니다.',
+    );
+    setTodoData(todoData.filter(data => data.id !== id));
+  };
+
   const addContent = () => {
     if (addData.length > 1) {
       setTodoData([...todoData, {data: addData, id: dataId.current}]);
@@ -20,6 +28,14 @@ const TodoList = () => {
     }
     todoData.sort((a, b) => b.id - a.id);
     setAddData('');
+  };
+
+  const onEditData = (targetId, newContent) => {
+    setTodoData(
+      todoData.map(it => {
+        it.id === targetId ? {...it, data: newContent} : it;
+      }),
+    );
   };
 
   return (
@@ -47,7 +63,13 @@ const TodoList = () => {
           <native.ScrollView style={styles.list}>
             {todoData
               .map(it => {
-                return <TodoItem data={it} />;
+                return (
+                  <TodoItem
+                    it={it}
+                    deleteTodo={deleteTodo}
+                    onEditData={onEditData}
+                  />
+                );
               })
               .sort((a, b) => a.id - b.id)}
           </native.ScrollView>
