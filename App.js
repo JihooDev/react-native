@@ -22,26 +22,28 @@ import {
 } from 'react-native';
 import TodoList from './src/component/todo_list/TodoList';
 import Header from './src/component/header/Header';
+import Home from './src/component/home/Home';
+import {createStackNavigator} from 'react-navigation-stack';
 
-const Tab = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-        <Text>이동</Text>
-        <Tab.Navigator>
-          <Tab.Screen
-            name="Home"
-            component={TodoList}
-            options={{title: 'welcome'}}
-          />
-          <Tab.Screen name="header" component={Header} />
-        </Tab.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen name="Header" component={Header} />
+          <Stack.Screen name="TodoList" component={TodoList} />
+        </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F4F2F3',
+  },
+});
 
 export default App;
